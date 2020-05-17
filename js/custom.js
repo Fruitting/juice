@@ -10,17 +10,6 @@
 		$('#preloader').delay(550).fadeOut('slow'); 
 		$('body').delay(450).css({'overflow':'visible'});
 	});
-    	
-	/* ..............................................
-    Navbar Bar
-    ................................................. */
-	
-	$('.navbar-nav .nav-link').on('click', function() {
-		var toggle = $('.navbar-toggler').is(':visible');
-		if (toggle) {
-			$('.navbar-collapse').collapse('hide');
-		}
-	});
 	
 	/* ..............................................
     Fixed Menu
@@ -33,13 +22,45 @@
 			$('.top-header').removeClass('fixed-menu');
 		}
 	});
-
+	
 	/* ..............................................
-    Properties Filter
+    Gallery
     ................................................. */
+	
+	$('#slides').superslides({
+		inherit_width_from: '.cover-slides',
+		inherit_height_from: '.cover-slides',
+		play: 5000,
+		animation: 'fade',
+	});
+	
+	$( ".cover-slides ul li" ).append( "<div class='overlay-background'></div>" );
+	
+	/* ..............................................
+    Map Full
+    ................................................. */
+	
+	$(document).ready(function(){ 
+		$(window).on('scroll', function () {
+			if ($(this).scrollTop() > 100) { 
+				$('#back-to-top').fadeIn(); 
+			} else { 
+				$('#back-to-top').fadeOut(); 
+			} 
+		}); 
+		$('#back-to-top').click(function(){ 
+			$("html, body").animate({ scrollTop: 0 }, 600); 
+			return false; 
+		}); 
+	});
+	
+	/* ..............................................
+    Special Menu
+    ................................................. */
+	
 	var Container = $('.container');
 	Container.imagesLoaded(function () {
-		var portfolio = $('.properties-menu');
+		var portfolio = $('.special-menu');
 		portfolio.on('click', 'button', function () {
 			$(this).addClass('active').siblings().removeClass('active');
 			var filterValue = $(this).attr('data-filter');
@@ -47,60 +68,32 @@
 				filter: filterValue
 			});
 		});
-		var $grid = $('.properties-list').isotope({
-			itemSelector: '.properties-grid'
-		});
-
-	});
-
-	/* ..............................................
-    Gallery
-    ................................................. */
-	
-	$(document).ready(function() {
-		$('.popup-gallery').magnificPopup({
-			delegate: 'a',
-			type: 'image',
-			tLoading: 'Loading image #%curr%...',
-			mainClass: 'mfp-img-mobile',
-			gallery: {
-				enabled: true,
-				navigateByImgClick: true,
-				preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-			},
-			image: {
-				tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-				titleSrc: function(item) {
-					return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
-				}
-			}
+		var $grid = $('.special-list').isotope({
+			itemSelector: '.special-grid'
 		});
 	});
 	
 	/* ..............................................
-    Scroll To Top
+    BaguetteBox
     ................................................. */
 	
-	$(document).ready(function () {
-
-		$(window).scroll(function () {
-			if ($(this).scrollTop() > 100) {
-				$('#scroll-to-top').fadeIn();
-			} else {
-				$('#scroll-to-top').fadeOut();
-			}
-		});
-
-		$('#scroll-to-top').click(function () {
-			$("html, body").animate({
-				scrollTop: 0
-			}, 600);
-			return false;
-		});
-
+	baguetteBox.run('.tz-gallery', {
+		animation: 'fadeIn',
+		noScrollbars: true
 	});
 	
 	
-
+	
+	/* ..............................................
+    Datepicker
+    ................................................. */
+	
+	$('.datepicker').pickadate();
+	
+	$('.time').pickatime();
+	
+	
+	
+	
 	
 }(jQuery));
